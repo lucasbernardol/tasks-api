@@ -6,7 +6,8 @@
   "author": "lucasbernardol <jose.lukass03@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/main.ts"
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/main.ts",
+    "typeorm:cli": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
