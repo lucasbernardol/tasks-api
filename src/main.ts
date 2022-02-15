@@ -1,4 +1,7 @@
+import 'dotenv/config';
+
 import { Database } from '@database/Database';
+import config from '@config/env';
 
 import { app } from './app';
 
@@ -6,4 +9,6 @@ import { app } from './app';
 Database.connect();
 
 /** Run server */
-app.listen(3333, () => console.log('\nPORT: 3333'));
+const { port, host } = config;
+
+app.listen(port, () => console.log(`\nHOST: ${host}`));
