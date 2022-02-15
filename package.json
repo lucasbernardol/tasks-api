@@ -1,0 +1,8 @@
+{
+  "name": "tasks-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lucasbernardol/tasks-api.git",
+  "author": "lucasbernardol <jose.lukass03@gmail.com>",
+  "license": "MIT"
+}
