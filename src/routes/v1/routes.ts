@@ -2,7 +2,8 @@ import { Router } from 'express';
 
 import { MainController } from '@controllers/main/MainController';
 
-import { routerUsers } from './users.routes';
+import { userRouter } from './users.routes';
+import { sessionRouter } from './sessions.routes';
 
 const routes = Router();
 
@@ -13,6 +14,7 @@ routes.get('/', controller.handle);
 /**
  * Load routers
  */
-routes.use('/api', routerUsers);
+routes.use('/api', userRouter);
+routes.use('/api', sessionRouter);
 
 export { routes };

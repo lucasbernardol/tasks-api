@@ -1,3 +1,4 @@
+import { instanceToPlain } from 'class-transformer';
 import { getCustomRepository } from 'typeorm';
 import { Conflict } from 'http-errors';
 import { hash } from 'bcryptjs';
@@ -29,17 +30,11 @@ export class CreateUserServices {
     const { name, full_name, email, password } = user;
 
     /** @TODO validation */
-    const userAccountExistis = await this.repositories.findOne({
-      where: {
-        email,
-      },
-    });
+    const account = await this.repositories.findOne({ email });
 
-    if (userAccountExistis) {
-      throw new Conflict('Invalid email address!');
-    }
+    if (account) throw new Conflict('Invalid email address!');
 
-    /** Hash */
+    /** @TODO Plain to hash */
     const plainPasswordToHash = await hash(password, this.salt);
 
     const userAccountInstance = this.repositories.create({
@@ -49,6 +44,8 @@ export class CreateUserServices {
       password: plainPasswordToHash,
     });
 
-    return await this.repositories.save(userAccountInstance);
+    const userInstanceSaved = await this.repositories.save(userAccountInstance);
+
+    return instanceToPlain(userInstanceSaved);
   }
 }
