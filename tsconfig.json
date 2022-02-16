@@ -20,6 +20,7 @@
     "baseUrl": "./src",
     "paths": {
       "@config/*": ["config/*"],
+      "@constants/*": ["constants/*"],
       "@controllers/*": ["core/controllers/*"],
       "@entities/*": ["core/entities/*"],
       "@middlewares/*": ["core/middlewares/*"],
