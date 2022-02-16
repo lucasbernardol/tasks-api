@@ -6,8 +6,8 @@ import { BadRequest } from 'http-errors';
 import { sign, Secret, SignOptions } from 'jsonwebtoken';
 import util from 'util';
 
-import config from '@config/env';
 import { UserRepositories } from '@repositories/UserRepositories';
+import config from '@config/env';
 
 /**
  * @type Permission
@@ -50,7 +50,12 @@ export class AuthenticateServices {
   async execute(options: IAuthenticateUserService) {
     const { email, password } = options;
 
-    const account = await this.repositories.findOne({ email });
+    const account = await this.repositories.findOne({
+      where: {
+        email,
+      },
+      relations: ['avatar'],
+    });
 
     if (!account) {
       /** @TODO Return a error message */
@@ -60,7 +65,9 @@ export class AuthenticateServices {
     const receivedPasswordsMatches = await compare(password, account.password);
 
     /** Matchs */
-    if (!receivedPasswordsMatches) throw new BadRequest(this.message);
+    if (!receivedPasswordsMatches) {
+      throw new BadRequest(this.message);
+    }
 
     /** @TODO  Sign access token */
     // prettier-ignore

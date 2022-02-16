@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { FindUserByPkServices } from '@services/users/FindUserByPkServices';
+import { FindUserByIdServices } from '@services/users/FindUserByIdServices';
 
 /**
  * @class MeController
@@ -10,7 +10,7 @@ export class MeController {
     try {
       const { id } = request.user;
 
-      const services = new FindUserByPkServices();
+      const services = new FindUserByIdServices();
 
       const me = await services.execute(id);
 

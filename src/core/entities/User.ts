@@ -4,10 +4,15 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
 import { v4 as uuid } from 'uuid';
+
+import { Upload } from './Upload';
 
 /**
  * @class User
@@ -45,6 +50,18 @@ class User {
     default: false,
   })
   is_admin?: boolean;
+
+  @Column({
+    default: null,
+  })
+  avatar_id?: string;
+
+  @OneToOne(() => Upload)
+  @JoinColumn({ name: 'avatar_id' })
+  avatar: Upload;
+
+  @OneToMany(() => Upload, (upload) => upload.owner)
+  uploads: Upload[];
 
   @CreateDateColumn()
   created_at: Date;
