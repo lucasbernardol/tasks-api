@@ -1,12 +1,15 @@
-interface AuthenticatedRequest {
-  id: string;
-  permissions: [string, string?];
-  iat: number;
-  exp: number;
-}
-
 declare namespace Express {
   export interface Request {
-    user: AuthenticatedRequest;
+    user: {
+      id: string;
+      permissions: [string, string?];
+      iat: number;
+      exp: number;
+    };
+
+    paging: {
+      page: number;
+      limit: number;
+    };
   }
 }

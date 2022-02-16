@@ -16,6 +16,7 @@ export class CreateTags1644955697151 implements MigrationInterface {
           name: 'name',
           type: 'varchar',
           length: '120',
+          isUnique: true,
           isNullable: false,
         },
 

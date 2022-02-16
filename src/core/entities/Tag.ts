@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { v4 as uuid } from 'uuid';
+
 /**
  * @class Tag
  */
@@ -14,11 +16,17 @@ class Tag {
   @PrimaryColumn()
   id: string;
 
+  public constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+  }
+
   @Column()
   name: string;
 
   @Column()
-  discription: string;
+  description: string;
 
   @CreateDateColumn()
   created_at: Date;
