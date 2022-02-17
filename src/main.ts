@@ -1,9 +1,9 @@
 import 'dotenv/config';
 
-import { Database } from '@database/Database';
 import config from '@config/env';
+import { Database } from '@database/Database';
 
-import { app } from './app';
+import { app } from '@api/app';
 
 /** Database connect  */
 Database.connect();

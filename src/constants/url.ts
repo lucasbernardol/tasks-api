@@ -1,6 +1,6 @@
 import config from '@config/env';
 
 /**
- * @constant filesUrl
+ * @constant filesUploadsURL
  */
-export const filesUrl = `${config.host}/files/`;
+export const filesUploadsURL = `${config.host}/files/`;

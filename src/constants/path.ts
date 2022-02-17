@@ -1,6 +1,12 @@
 import { resolve } from 'path';
 
 /**
- * @constant tempPath
+ * @constant filesUploadsDirectory
  */
-export const tempPath = resolve(__dirname, '..', '..', 'temp', 'uploads');
+export const filesUploadsDirectory = resolve(
+  __dirname,
+  '..',
+  '..',
+  'temp',
+  'uploads'
+);
