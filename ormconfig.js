@@ -7,15 +7,14 @@ module.exports = {
 
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
-
   database: process.env.DATABASE_NAME,
 
-  entities: ['src/core/entities/*{.js,.ts}'],
+  entities: ['src/api/core/entities/*{.js,.ts}'],
 
   migrationsTableName: 'migrations',
-  migrations: ['src/core/database/migrations/*{.js,.ts}'],
+  migrations: ['src/api/coredatabase/migrations/*{.js,.ts}'],
 
   cli: {
-    migrationsDir: 'src/core/database/migrations',
+    migrationsDir: 'src/api/core/database/migrations',
   },
 };
