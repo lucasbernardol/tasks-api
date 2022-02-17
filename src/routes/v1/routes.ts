@@ -7,6 +7,8 @@ import { sessionRouter } from './sessions.routes';
 import { tagRouter } from './tags.routes';
 import { uploadsRouter } from './uploads.routes';
 
+import { projectRouter } from './projects.routes';
+
 const routes = Router();
 
 const controller = new MainController();
@@ -21,5 +23,6 @@ routes.use('/api', sessionRouter);
 
 routes.use('/api', tagRouter);
 routes.use('/api', uploadsRouter);
+routes.use('/api', projectRouter);
 
 export { routes };

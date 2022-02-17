@@ -1,11 +1,10 @@
 import { Router } from 'express';
-
 import { AuthenticateController } from '@controllers/sessions/AuthenticateController';
 
 const sessionRouter = Router();
 
-const authenticateController = new AuthenticateController();
+const controller = new AuthenticateController();
 
-sessionRouter.post('/sessions', authenticateController.handle);
+sessionRouter.post('/sessions', controller.handle);
 
 export { sessionRouter };
