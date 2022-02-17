@@ -21,15 +21,18 @@
     "paths": {
       "@config/*": ["config/*"],
       "@constants/*": ["constants/*"],
-      "@controllers/*": ["core/controllers/*"],
-      "@entities/*": ["core/entities/*"],
-      "@middlewares/*": ["core/middlewares/*"],
-      "@database/*": ["core/database/*"],
-      "@repositories/*": ["core/repositories/*"],
-      "@utils/*": ["core/utils/*"],
-      "@services/*": ["core/services/*"],
-      "@validators/*": ["core/validators/*"],
-      "@routes/*": ["routes/*"]
+
+      "@controllers/*": ["api/core/controllers/*"],
+      "@entities/*": ["api/core/entities/*"],
+      "@middlewares/*": ["api/core/middlewares/*"],
+      "@database/*": ["api/core/database/*"],
+      "@repositories/*": ["api/core/repositories/*"],
+      "@services/*": ["api/core/services/*"],
+      "@validators/*": ["api/core/validators/*"],
+      "@routes/*": ["api/routes/*"],
+
+      "@api/*": ["api/*"],
+      "@shared/*": ["shared/*"]
     },
 
     "resolveJsonModule": true,
