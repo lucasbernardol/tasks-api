@@ -12,7 +12,7 @@ module.exports = {
   entities: ['src/api/core/entities/*{.js,.ts}'],
 
   migrationsTableName: 'migrations',
-  migrations: ['src/api/coredatabase/migrations/*{.js,.ts}'],
+  migrations: ['src/api/core/database/migrations/*{.js,.ts}'],
 
   cli: {
     migrationsDir: 'src/api/core/database/migrations',
