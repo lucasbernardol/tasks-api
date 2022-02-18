@@ -7,7 +7,7 @@ export class ListUsersController {
     try {
       const services = new ListUsersServices();
 
-      const users = await services.execute();
+      const users = await services.execute({ ...request.paging });
 
       return response.json(users);
     } catch (error) {

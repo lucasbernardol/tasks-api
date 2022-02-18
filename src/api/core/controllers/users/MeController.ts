@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { FindUserByIdServices } from '@services/users/FindUserByIdServices';
+import { FindUserByIdService } from '@services/users/FindUserByIdService';
 
 /**
  * @class MeController
@@ -10,7 +10,7 @@ export class MeController {
     try {
       const { id } = request.user;
 
-      const services = new FindUserByIdServices();
+      const services = new FindUserByIdService();
 
       const me = await services.execute(id);
 

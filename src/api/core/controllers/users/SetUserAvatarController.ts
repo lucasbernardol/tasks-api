@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { SetUserAvatarServices } from '@services/users/SetUserAvatarServices';
+import { SetUserAvatarService } from '@services/users/SetUserAvatarService';
 
 /**
  * @class SetUserAvatarController
@@ -12,12 +12,9 @@ export class SetUserAvatarController {
 
       const { id } = request.user;
 
-      const services = new SetUserAvatarServices();
+      const services = new SetUserAvatarService();
 
-      const updated = await services.execute({
-        user_id: id,
-        avatar_id,
-      });
+      const updated = await services.execute({ user_id: id, avatar_id });
 
       return response.json(updated);
     } catch (error) {

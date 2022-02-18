@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { ClearUserAvatarServices } from '@services/users/ClearUserAvatarServices';
+import { ClearUserAvatarService } from '@services/users/ClearUserAvatarService';
 
 /**
  * @class ClearUserAvatarController
@@ -10,7 +10,7 @@ export class ClearUserAvatarController {
     try {
       const { id } = request.user;
 
-      const services = new ClearUserAvatarServices();
+      const services = new ClearUserAvatarService();
 
       const updated = await services.execute(id);
 

@@ -37,6 +37,7 @@ class User {
   @Column()
   password: string;
 
+  @Exclude()
   @Column({
     default: false,
   })

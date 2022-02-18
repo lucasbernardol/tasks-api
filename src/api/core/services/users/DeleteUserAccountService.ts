@@ -1,30 +1,33 @@
 import { getCustomRepository } from 'typeorm';
+import { compare } from 'bcryptjs';
 import { BadRequest } from 'http-errors';
 
 import { UserRepositories } from '@repositories/UserRepositories';
-import { compare } from 'bcryptjs';
 
+/**
+ * @class IDeleteUserAccount
+ */
 export interface IDeleteUserAccount {
   id: string;
   password: string;
 }
 
 /**
- * @class DeleteUserAccountServices
+ * @class DeleteUserAccountService
  */
-export class DeleteUserAccountServices {
+export class DeleteUserAccountService {
   public constructor(
     public repositories = getCustomRepository(UserRepositories)
   ) {}
 
   /** @method execute - main method */
-  async execute(options: IDeleteUserAccount) {
+  async execute(options: IDeleteUserAccount): Promise<{ deleted: boolean }> {
     const { id, password } = options;
 
     const account = await this.repositories.findOne({ id });
 
+    /** @TODO Return a error message */
     if (!account) {
-      /** Return a error message */
       throw new BadRequest('Account does not exists!');
     }
 
@@ -34,12 +37,10 @@ export class DeleteUserAccountServices {
       throw new BadRequest('Invalid passwords!');
     }
 
-    const deleteResult = await this.repositories.delete(id);
-
-    const deleted = Boolean(deleteResult.affected);
+    const deletion = await this.repositories.delete(id);
 
     return {
-      deleted,
+      deleted: Boolean(deletion.affected),
     };
   }
 }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { DeleteUserAccountServices } from '@services/users/DeleteUserAccountServices';
+import { DeleteUserAccountService } from '@services/users/DeleteUserAccountService';
 
 /**
  * @class DeleteAccountController
@@ -12,7 +12,7 @@ export class DeleteAccountController {
 
       const { password } = request.body;
 
-      const services = new DeleteUserAccountServices();
+      const services = new DeleteUserAccountService();
 
       const deleted = await services.execute({ id, password });
 

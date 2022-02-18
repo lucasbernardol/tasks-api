@@ -5,7 +5,10 @@ import { hash } from 'bcryptjs';
 
 import { UserRepositories } from '@repositories/UserRepositories';
 
-interface IUser {
+/**
+ * @interface IUser
+ */
+export interface IUser {
   id?: string;
   name: string;
   full_name: string;
@@ -17,9 +20,9 @@ interface IUser {
 }
 
 /**
- * @class CreateUserServices
+ * @class CreateUserService
  */
-export class CreateUserServices {
+export class CreateUserService {
   private salt: number = 8;
 
   public constructor(
@@ -29,9 +32,12 @@ export class CreateUserServices {
   async execute(user: IUser) {
     const { name, full_name, email, password } = user;
 
-    /** @TODO validation */
-    const account = await this.repositories.findOne({ email });
+    const account = await this.repositories.findOne({
+      where: { email },
+      select: ['id'],
+    });
 
+    /** @TODO validation */
     if (account) throw new Conflict('Invalid email address!');
 
     /** @TODO Plain to hash */

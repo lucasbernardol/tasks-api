@@ -1,7 +1,14 @@
 import { instanceToPlain } from 'class-transformer';
 import { getCustomRepository } from 'typeorm';
+import { Conflict } from 'http-errors';
 
+import path from 'path';
+
+import { filesUploadsDirectory } from '@constants/path';
 import { UploadRepositories } from '@repositories/UploadRepositories';
+
+import { UserRepositories } from '@repositories/UserRepositories';
+import { deleteFileSync } from '@shared/utils/deleteFileSync';
 
 /**
  * @interface IUpload
@@ -23,11 +30,29 @@ export interface IUpload {
  */
 export class CreateUploadService {
   public constructor(
-    public repositories = getCustomRepository(UploadRepositories)
+    public repositories = getCustomRepository(UploadRepositories),
+    private usersRepositories = getCustomRepository(UserRepositories)
   ) {}
 
   async execute(upload: IUpload): Promise<IUpload> {
     const { filename, originalname, bytes, owner_id, mimetype } = upload;
+
+    const account = await this.usersRepositories.findOne({
+      where: {
+        id: owner_id,
+      },
+
+      select: ['id'],
+    });
+
+    /** @TODO validate account  */
+    if (!account) {
+      const filePath = path.resolve(filesUploadsDirectory, filename);
+
+      deleteFileSync(filePath);
+
+      throw new Conflict('Invalid account!');
+    }
 
     const uploadInstance = this.repositories.create({
       filename,

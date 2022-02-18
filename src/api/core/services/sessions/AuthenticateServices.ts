@@ -27,7 +27,6 @@ export interface IAuthenticateUserService {
  */
 export class AuthenticateServices {
   private permissions: Permissions = ['user'];
-
   private message: string = 'Invalid email/password, please try again later!';
 
   public constructor(

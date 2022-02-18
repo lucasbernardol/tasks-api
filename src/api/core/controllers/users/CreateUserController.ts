@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { CreateUserServices } from '@services/users/CreateUserServices';
+import { CreateUserService } from '@services/users/CreateUserService';
 
 /**
  * @class CreateUserController
@@ -10,7 +10,7 @@ export class CreateUserController {
     try {
       const { name, full_name, email, password } = request.body;
 
-      const services = new CreateUserServices();
+      const services = new CreateUserService();
 
       const userAccount = await services.execute({
         name,

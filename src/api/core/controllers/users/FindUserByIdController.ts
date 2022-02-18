@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { FindUserByIdServices } from '@services/users/FindUserByIdServices';
+import { FindUserByIdService } from '@services/users/FindUserByIdService';
 
 /**
  * @class FindUserByPkController
@@ -8,13 +8,13 @@ import { FindUserByIdServices } from '@services/users/FindUserByIdServices';
 export class FindUserByIdController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
-      const { id: uuid } = request.params;
+      const { id } = request.params;
 
-      const services = new FindUserByIdServices();
+      const services = new FindUserByIdService();
 
-      const account = await services.execute(uuid);
+      const user = await services.execute(id);
 
-      return response.json(account);
+      return response.json(user);
     } catch (error) {
       return next(error);
     }

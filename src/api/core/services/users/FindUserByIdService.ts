@@ -4,18 +4,17 @@ import { getCustomRepository } from 'typeorm';
 import { UserRepositories } from '@repositories/UserRepositories';
 
 /**
- * @class FindUserByPkServices
+ * @class FindUserByPkService
  */
-export class FindUserByIdServices {
+export class FindUserByIdService {
   public constructor(
     public repositories = getCustomRepository(UserRepositories)
   ) {}
 
+  /** @method execute  */
   async execute(id: string) {
     const account = await this.repositories.findOne({
-      where: {
-        id,
-      },
+      where: { id },
       relations: ['avatar'],
     });
 
