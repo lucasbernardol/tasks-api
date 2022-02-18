@@ -16,28 +16,28 @@ export class DeleteProjectsServices {
     public repostiories = getCustomRepository(ProjectRepositories)
   ) {}
 
+  /** @method execute - main method */
   async execute(options: IProjectDelete) {
     const { owner_id, project_id } = options;
 
-    /** @TODO validation */
-    const isValidProjectOwner = await this.repostiories.findOne({
+    const project = await this.repostiories.findOne({
       where: {
         id: project_id,
-        owner_id, // Authenticated user
+        owner_id,
       },
+
+      select: ['id'],
     });
 
-    if (!isValidProjectOwner) {
-      /** Return a error message */
-      throw new BadRequest('Project not found!');
+    if (!project) {
+      /** @TODO Return a error message */
+      throw new BadRequest('Project not found, no changes applied!');
     }
 
     const deleteResult = await this.repostiories.delete(project_id);
 
-    const deleted = Boolean(deleteResult.affected);
-
     return {
-      deleted,
+      deleted: Boolean(deleteResult.affected),
     };
   }
 }

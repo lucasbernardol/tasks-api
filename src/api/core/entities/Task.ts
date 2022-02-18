@@ -2,35 +2,30 @@ import {
   Entity,
   PrimaryColumn,
   Column,
-  ManyToOne,
   JoinColumn,
+  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
 
 import { v4 as uuid } from 'uuid';
 
+import { Project } from './Project';
 import { User } from './User';
-import { Tag } from './Tag';
-import { Task } from './Task';
 
 /**
- * @class Project
+ * @class Task
  */
-@Entity({ name: 'projects' })
-class Project {
+@Entity({ name: 'tasks' })
+class Task {
   @PrimaryColumn()
   id: string;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
-  subtitle: string;
-
-  @Column()
-  description: string;
+  details: string;
 
   @Column({ default: false })
   completed: boolean;
@@ -43,17 +38,11 @@ class Project {
   owner: User;
 
   @Column()
-  tag_id: string;
+  project_id: string;
 
-  @ManyToOne(() => Tag)
-  @JoinColumn({ name: 'tag_id' })
-  tag: Tag;
-
-  /**
-   * Tasks: inverse relation
-   */
-  @OneToMany(() => Task, (task) => task.project)
-  tasks: Task[];
+  @ManyToOne(() => Project)
+  @JoinColumn({ name: 'project_id' })
+  project: Project;
 
   @CreateDateColumn()
   created_at: Date;
@@ -61,6 +50,9 @@ class Project {
   @UpdateDateColumn()
   updated_at: Date;
 
+  /**
+   * @pbulic constructor
+   */
   public constructor() {
     if (!this.id) {
       this.id = uuid();
@@ -68,4 +60,4 @@ class Project {
   }
 }
 
-export { Project };
+export { Task };

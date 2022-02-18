@@ -5,9 +5,10 @@ import { usersRoutes } from './users.routes';
 import { sessionsRoutes } from './sessions.routes';
 
 import { uploadsRoutes } from './uploads.routes';
-
 import { tagsRouters } from './tags.routes';
+
 import { projectsRoutes } from './projects.routes';
+import { tasksRoutes } from './tasks.routes';
 
 const routes = Router();
 
@@ -40,5 +41,10 @@ routes.use('/api', uploadsRoutes);
  * @example: /api/projects
  */
 routes.use('/api', projectsRoutes);
+
+/**
+ * @example: /api/tasks
+ */
+routes.use('/api', tasksRoutes);
 
 export { routes };
