@@ -3,6 +3,9 @@ import { getCustomRepository } from 'typeorm';
 
 import { UploadRepositories } from '@repositories/UploadRepositories';
 
+/**
+ * @interface IUpload
+ */
 export interface IUpload {
   id?: string;
   filename: string;
@@ -10,19 +13,20 @@ export interface IUpload {
   bytes: number;
   owner_id: string;
   mimetype: string;
+  url?: string;
   created_at?: Date;
   updated_at?: Date;
 }
 
 /**
- * @class CreateUploadServices
+ * @class CreateUploadService
  */
-export class CreateUploadServices {
+export class CreateUploadService {
   public constructor(
     public repositories = getCustomRepository(UploadRepositories)
   ) {}
 
-  async execute(upload: IUpload) {
+  async execute(upload: IUpload): Promise<IUpload> {
     const { filename, originalname, bytes, owner_id, mimetype } = upload;
 
     const uploadInstance = this.repositories.create({
@@ -35,6 +39,6 @@ export class CreateUploadServices {
 
     const uploadInstanceSaved = await this.repositories.save(uploadInstance);
 
-    return instanceToPlain(uploadInstanceSaved);
+    return instanceToPlain(uploadInstanceSaved) as IUpload;
   }
 }

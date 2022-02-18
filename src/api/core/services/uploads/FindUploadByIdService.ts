@@ -4,9 +4,9 @@ import { getCustomRepository } from 'typeorm';
 import { UploadRepositories } from '@repositories/UploadRepositories';
 
 /**
- * @class FindUploadByIdServices
+ * @class FindUploadByIdService
  */
-export class FindUploadByIdServices {
+export class FindUploadByIdService {
   public constructor(
     public repositories = getCustomRepository(UploadRepositories)
   ) {}

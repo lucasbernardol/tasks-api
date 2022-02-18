@@ -3,15 +3,9 @@ import { getCustomRepository } from 'typeorm';
 import { paginate } from 'paging-util';
 
 import { UploadRepositories } from '@repositories/UploadRepositories';
-import { pagingUtilFixed, pagingUtilNormalize } from '@shared/utils/paging';
 
-export interface IPaging {
-  page: number;
-  limit: number;
-  setRange?: boolean;
-  max?: number;
-  min?: number;
-}
+import { pagingUtilFixed, pagingUtilNormalize } from '@shared/utils/paging';
+import { IPagingOptions } from '@shared/types/IPagingOptions';
 
 /**
  * @class ListUploadsServices
@@ -21,14 +15,10 @@ export class ListUploadsServices {
     public repositories = getCustomRepository(UploadRepositories)
   ) {}
 
-  async execute(owner_id: string, pagingOptions: IPaging) {
-    const { page, limit, ...rest } = pagingOptions;
+  async execute(owner_id: string, options: IPagingOptions) {
+    const records = await this.repositories.count({ owner_id });
 
-    const records = await this.repositories.count({
-      owner_id,
-    });
-
-    const pagingAlgorithmOptions = { records, page, limit, ...rest };
+    const pagingAlgorithmOptions = { records, ...options };
 
     const { offset, constants, ...paging } = paginate(pagingAlgorithmOptions);
 
@@ -42,11 +32,16 @@ export class ListUploadsServices {
     });
 
     /** @TODO paging */
-    const pagination = records ? pagingUtilNormalize(paging) : null;
+    let metadata: object;
+    const recordsTotalGraterThanOne = records >= 1;
 
-    const fixed = pagingUtilFixed(constants);
+    if (recordsTotalGraterThanOne) {
+      const pagination = pagingUtilNormalize(paging);
 
-    const metadata = records ? { pagination, fixed } : null;
+      const fixed = pagingUtilFixed(constants);
+
+      metadata = { pagination, fixed };
+    }
 
     return {
       uploads: instanceToPlain(uploads),

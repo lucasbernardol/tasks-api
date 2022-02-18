@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { FindUploadByIdServices } from '@services/uploads/FindUploadByIdServices';
+import { FindUploadByIdService } from '@services/uploads/FindUploadByIdService';
 
 /**
  * @class FindUploadByIdController
@@ -10,7 +10,7 @@ export class FindUploadByIdController {
     try {
       const { id } = request.params;
 
-      const services = new FindUploadByIdServices();
+      const services = new FindUploadByIdService();
 
       const upload = await services.execute(id);
 

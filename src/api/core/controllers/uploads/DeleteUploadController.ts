@@ -1,5 +1,6 @@
-import { DeleteUploadServices } from '@services/uploads/DeleteUploadServices';
 import { NextFunction, Request, Response } from 'express';
+
+import { DeleteUploadService } from '@services/uploads/DeleteUploadService';
 
 /**
  * @class DeleteUploadController
@@ -9,7 +10,7 @@ export class DeleteUploadController {
     try {
       const { id } = request.params;
 
-      const services = new DeleteUploadServices();
+      const services = new DeleteUploadService();
 
       const deleted = await services.execute(id);
 

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { CreateUploadServices } from '@services/uploads/CreateUploadService';
+import { CreateUploadService } from '@services/uploads/CreateUploadService';
 
 export class CreateUploadController {
   async handle(request: Request, response: Response, next: NextFunction) {
@@ -9,7 +9,7 @@ export class CreateUploadController {
 
       const { filename, originalname, size, mimetype } = request.file;
 
-      const services = new CreateUploadServices();
+      const services = new CreateUploadService();
 
       const upload = await services.execute({
         owner_id: id,

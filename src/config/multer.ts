@@ -4,7 +4,7 @@ import createHttpError from 'http-errors';
 import crypto from 'crypto';
 import path from 'path';
 
-import { tempPath } from '@constants/path';
+import { filesUploadsDirectory } from '@constants/path';
 
 import {
   multerFilenameSizeInBytes,
@@ -14,7 +14,7 @@ import {
 
 const options: Options = {
   storage: multer.diskStorage({
-    destination: tempPath,
+    destination: filesUploadsDirectory,
     filename: (request, file, callback) => {
       crypto.randomBytes(multerFilenameSizeInBytes, (error, buffer) => {
         if (error) return callback(error, null);
@@ -40,7 +40,7 @@ const options: Options = {
       (mimetype) => mimetype === fileMimetype.toLowerCase()
     );
 
-    /** Return a error message */
+    /** @TODO Return a error message */
     if (!fileMimetypeIsSupported) {
       const extras = {
         supported_mimetypes: mimetypes,
