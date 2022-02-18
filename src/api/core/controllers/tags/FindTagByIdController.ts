@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { FindTagByIdServices } from '@services/tags/FindTagByIdServices';
+import { FindTagByIdService } from '@services/tags/FindTagByIdService';
 
 /**
  * @class FindTagByIdController
@@ -10,7 +10,7 @@ export class FindTagByIdController {
     try {
       const { id } = request.params;
 
-      const services = new FindTagByIdServices();
+      const services = new FindTagByIdService();
 
       const tag = await services.execute(id);
 

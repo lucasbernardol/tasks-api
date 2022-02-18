@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { CreateTagServices } from '@services/tags/CreateTagServices';
+import { CreateTagService } from '@services/tags/CreateTagService';
 
 /**
  * @class CreateTagController
@@ -10,7 +10,7 @@ export class CreateTagController {
     try {
       const { name, description } = request.body;
 
-      const services = new CreateTagServices();
+      const services = new CreateTagService();
 
       const tag = await services.execute({ name, description });
 

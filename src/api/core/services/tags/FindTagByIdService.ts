@@ -5,15 +5,15 @@ import { TagRepositories } from '@repositories/TagRepositories';
 /**
  * @class FindTagByIdServices
  */
-export class FindTagByIdServices {
+export class FindTagByIdService {
   public constructor(
     public repositories = getCustomRepository(TagRepositories)
   ) {}
 
   /** @method execute -  main method */
   async execute(id: string) {
-    const tagResourceFound = await this.repositories.findOne({ id });
+    const tag = await this.repositories.findOne({ id });
 
-    return tagResourceFound ?? null;
+    return tag ?? null;
   }
 }

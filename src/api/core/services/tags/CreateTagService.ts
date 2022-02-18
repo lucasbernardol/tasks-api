@@ -15,30 +15,31 @@ export interface ITag {
 }
 
 /**
- * @class  CreateTagServices
+ * @class  CreateTagService
  */
-export class CreateTagServices {
+export class CreateTagService {
+  private message: string = 'Tag already exists, no changes applied!';
+
   public constructor(
     public repositories = getCustomRepository(TagRepositories)
   ) {}
 
-  async execute(tag: ITag) {
-    const { name, description } = tag;
+  async execute({ name, description }: ITag) {
+    const tag = await this.repositories.findOne({
+      where: {
+        name,
+      },
+      select: ['id'],
+    });
 
-    const tagExists = await this.repositories.findOne({ name });
-
-    if (tagExists) {
-      /** @TODO Return a error message */
-      throw new BadRequest('Tag name already exists!');
-    }
+    /** @TODO Return a error message */
+    if (tag) throw new BadRequest(this.message);
 
     const tagInstance = this.repositories.create({
       name,
       description,
     });
 
-    const tagInstanceSaved = await this.repositories.save(tagInstance);
-
-    return tagInstanceSaved;
+    return await this.repositories.save(tagInstance);
   }
 }

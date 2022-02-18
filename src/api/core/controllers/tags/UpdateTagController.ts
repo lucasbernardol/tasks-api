@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { UpdateTagServices } from '@services/tags/UpdateTagServices';
+import { UpdateTagService } from '@services/tags/UpdateTagService';
 
 /**
  * @class UpdateTagController
@@ -10,11 +10,11 @@ export class UpdateTagController {
     try {
       const { id } = request.params;
 
-      const { name, description } = request.body;
+      const { description } = request.body;
 
-      const services = new UpdateTagServices();
+      const services = new UpdateTagService();
 
-      const updated = await services.execute(id, { name, description });
+      const updated = await services.execute(id, { description });
 
       return response.json(updated);
     } catch (error) {

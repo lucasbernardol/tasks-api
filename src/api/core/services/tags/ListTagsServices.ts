@@ -2,45 +2,39 @@ import { getCustomRepository } from 'typeorm';
 import { paginate } from 'paging-util';
 
 import { TagRepositories } from '@repositories/TagRepositories';
+
+import { IPagingOptions } from '@shared/types/IPagingOptions';
 import { pagingUtilFixed, pagingUtilNormalize } from '@shared/utils/paging';
 
-export interface IPaging {
-  page: number;
-  limit: number;
-  setRange?: boolean;
-  max?: number;
-  min?: number;
-}
-
 /**
- * @class CreateTagsServices
+ * @class ListTagsServices
  */
 export class ListTagsServices {
   public constructor(
     public repositories = getCustomRepository(TagRepositories)
   ) {}
 
-  async execute(pagingOptions: IPaging) {
-    const { page, limit, ...rest } = pagingOptions;
-
-    /** All records */
+  async execute(options: IPagingOptions) {
     const records = await this.repositories.count();
 
-    const normalizedOptions = { records, page, limit, ...rest };
-
-    const { offset, constants, ...paging } = paginate(normalizedOptions);
+    const { offset, constants, ...paging } = paginate({ records, ...options });
 
     const tags = await this.repositories.find({
       take: paging.limit,
       skip: offset,
     });
 
-    /** @TODO Normalize || recods >= 1  */
-    const pagination = records ? pagingUtilNormalize(paging) : null;
+    /** @TODO paging  */
+    let metadata: object;
 
-    const fixed = pagingUtilFixed(constants);
+    const recordsTotalGreaterThanOne = records >= 1;
 
-    const metadata = records ? { pagination, fixed } : null;
+    if (recordsTotalGreaterThanOne) {
+      const pagination = pagingUtilNormalize(paging);
+      const fixed = pagingUtilFixed(constants);
+
+      metadata = { pagination, fixed };
+    }
 
     return {
       tags,

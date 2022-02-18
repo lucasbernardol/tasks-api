@@ -15,7 +15,7 @@ import {
 
 const routes = Router();
 
-/** Middlewares */
+/** Controllers */
 const secure = ensureAuthentication();
 const onlyAdmin = validatePermission('admin');
 

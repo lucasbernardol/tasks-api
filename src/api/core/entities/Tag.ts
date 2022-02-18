@@ -28,6 +28,9 @@ class Tag {
   @UpdateDateColumn()
   updated_at: Date;
 
+  /**
+   * @public constructor
+   */
   public constructor() {
     if (!this.id) {
       this.id = uuid();

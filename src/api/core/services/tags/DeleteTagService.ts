@@ -3,20 +3,18 @@ import { getCustomRepository } from 'typeorm';
 import { TagRepositories } from '@repositories/TagRepositories';
 
 /**
- * @class DeleteTagServices
+ * @class DeleteTagService
  */
-export class DeleteTagServices {
+export class DeleteTagService {
   public constructor(
     public repositories = getCustomRepository(TagRepositories)
   ) {}
 
-  async execute(id: string) {
-    const deleteResult = await this.repositories.delete(id);
-
-    const deleted = Boolean(deleteResult.affected);
+  async execute(id: string): Promise<{ deleted: boolean }> {
+    const deletion = await this.repositories.delete({ id });
 
     return {
-      deleted,
+      deleted: Boolean(deletion.affected),
     };
   }
 }

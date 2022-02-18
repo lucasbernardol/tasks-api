@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { DeleteTagServices } from '@services/tags/DeleteTagServices';
+import { DeleteTagService } from '@services/tags/DeleteTagService';
 
 /**
  * @class DeleteTagController
@@ -10,7 +10,7 @@ export class DeleteTagController {
     try {
       const { id } = request.params;
 
-      const services = new DeleteTagServices();
+      const services = new DeleteTagService();
 
       const deleted = await services.execute(id);
 
