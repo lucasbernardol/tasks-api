@@ -7,6 +7,7 @@ import { TagRepositories } from '@repositories/TagRepositories';
  */
 export interface ITagUpdate {
   description: string;
+  color: string;
 }
 
 /**
@@ -17,10 +18,13 @@ export class UpdateTagService {
     public repositories = getCustomRepository(TagRepositories)
   ) {}
 
-  // prettier-ignore
-  async execute(id: string, { description }: ITagUpdate): Promise<{ updated: boolean }> {
+  async execute(
+    id: string,
+    { description, color }: ITagUpdate
+  ): Promise<{ updated: boolean }> {
     const updateResult = await this.repositories.update(id, {
       description,
+      color,
     });
 
     return {

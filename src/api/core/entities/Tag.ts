@@ -22,6 +22,9 @@ class Tag {
   @Column()
   description: string;
 
+  @Column()
+  color: string;
+
   @CreateDateColumn()
   created_at: Date;
 

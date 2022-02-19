@@ -9,6 +9,7 @@ import { TagRepositories } from '@repositories/TagRepositories';
 export interface ITag {
   id?: string;
   name: string;
+  color: string;
   description: string;
   created_at?: Date;
   updated_at?: Date;
@@ -24,7 +25,7 @@ export class CreateTagService {
     public repositories = getCustomRepository(TagRepositories)
   ) {}
 
-  async execute({ name, description }: ITag) {
+  async execute({ name, description, color }: ITag) {
     const tag = await this.repositories.findOne({
       where: {
         name,
@@ -38,6 +39,7 @@ export class CreateTagService {
     const tagInstance = this.repositories.create({
       name,
       description,
+      color,
     });
 
     return await this.repositories.save(tagInstance);

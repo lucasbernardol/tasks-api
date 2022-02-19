@@ -10,11 +10,11 @@ export class UpdateTagController {
     try {
       const { id } = request.params;
 
-      const { description } = request.body;
+      const { description, color } = request.body;
 
       const services = new UpdateTagService();
 
-      const updated = await services.execute(id, { description });
+      const updated = await services.execute(id, { description, color });
 
       return response.json(updated);
     } catch (error) {

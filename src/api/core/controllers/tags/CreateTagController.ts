@@ -8,11 +8,11 @@ import { CreateTagService } from '@services/tags/CreateTagService';
 export class CreateTagController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
-      const { name, description } = request.body;
+      const { name, description, color } = request.body;
 
       const services = new CreateTagService();
 
-      const tag = await services.execute({ name, description });
+      const tag = await services.execute({ name, description, color });
 
       return response.status(201).json(tag);
     } catch (error) {
