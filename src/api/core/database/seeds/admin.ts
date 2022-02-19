@@ -1,12 +1,17 @@
+import 'dotenv/config';
+
 import { createConnection } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import { UserRepositories } from '@repositories/UserRepositories';
 
+const { ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME, ADMIN_FULL_NAME } =
+  process.env;
+
 /**
  * @function createUserAdminSeeder
  */
-async function seedFunctionToCreateAdmin() {
+async function createUserAdminSeeder() {
   try {
     const connection = await createConnection();
 
@@ -15,7 +20,7 @@ async function seedFunctionToCreateAdmin() {
     /** @TODO validation  */
     const adminUserExists = await customRepositories.findOne({
       where: {
-        email: 'tasks@admin.com', // initial value
+        email: ADMIN_EMAIL,
       },
     });
 
@@ -24,12 +29,12 @@ async function seedFunctionToCreateAdmin() {
     }
 
     /** Hash */
-    const password = await hash('admin', 8);
+    const password = await hash(ADMIN_PASSWORD, 8);
 
     const adminInstance = customRepositories.create({
-      name: 'admin',
-      full_name: 'admin',
-      email: 'tasks@admin.com',
+      name: ADMIN_NAME,
+      full_name: ADMIN_FULL_NAME,
+      email: ADMIN_EMAIL,
       is_admin: true,
       password,
     });
@@ -42,4 +47,6 @@ async function seedFunctionToCreateAdmin() {
   }
 }
 
-seedFunctionToCreateAdmin().then(({ id }) => console.log(`ID: ${id}`));
+createUserAdminSeeder().then(({ id }) => {
+  console.log(`ID: ${id}`);
+});
