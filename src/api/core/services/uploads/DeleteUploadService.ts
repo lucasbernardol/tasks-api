@@ -21,7 +21,7 @@ export class DeleteUploadService {
   async execute(id: string) {
     const upload = await this.repositories.findOne({
       where: { id },
-      select: ['id', 'public_id'], // query
+      select: ['id', 'public_id'],
     });
 
     /** @TODO validation  */
@@ -31,7 +31,7 @@ export class DeleteUploadService {
       throw new BadRequest(this.getErrorMessage);
     }
 
-    /** Cloudinary  */
+    /** @TODO Cloudinary remove  */
     const cloudinaryDestroyResult = await cloudinaryUploadDestroyHandle(
       upload.public_id
     );
@@ -41,8 +41,8 @@ export class DeleteUploadService {
     const deleted = Boolean(deletion.affected);
 
     return {
-      cloudinary: cloudinaryDestroyResult,
       deleted,
+      external: cloudinaryDestroyResult,
     };
   }
 }

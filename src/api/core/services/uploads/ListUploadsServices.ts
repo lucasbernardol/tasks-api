@@ -1,4 +1,3 @@
-import { instanceToPlain } from 'class-transformer';
 import { getCustomRepository } from 'typeorm';
 import { paginate } from 'paging-util';
 
@@ -18,9 +17,7 @@ export class ListUploadsServices {
   async execute(owner_id: string, options: IPagingOptions) {
     const records = await this.repositories.count({ owner_id });
 
-    const pagingAlgorithmOptions = { records, ...options };
-
-    const { offset, constants, ...paging } = paginate(pagingAlgorithmOptions);
+    const { offset, constants, ...paging } = paginate({ records, ...options });
 
     const uploads = await this.repositories.find({
       where: {
@@ -33,18 +30,18 @@ export class ListUploadsServices {
 
     /** @TODO paging */
     let metadata: object;
-    const recordsTotalGraterThanOne = records >= 1;
 
-    if (recordsTotalGraterThanOne) {
+    const recordsTotalGreaterThanOne = records >= 1;
+
+    if (recordsTotalGreaterThanOne) {
       const pagination = pagingUtilNormalize(paging);
-
       const fixed = pagingUtilFixed(constants);
 
       metadata = { pagination, fixed };
     }
 
     return {
-      uploads: instanceToPlain(uploads),
+      uploads,
       metadata,
     };
   }

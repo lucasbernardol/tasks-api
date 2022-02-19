@@ -1,4 +1,3 @@
-import { instanceToPlain } from 'class-transformer';
 import { getCustomRepository } from 'typeorm';
 
 import { UploadRepositories } from '@repositories/UploadRepositories';
@@ -14,6 +13,6 @@ export class FindUploadByIdService {
   async execute(id: string) {
     const upload = await this.repositories.findOne({ id });
 
-    return instanceToPlain(upload) ?? null;
+    return upload ?? null;
   }
 }
