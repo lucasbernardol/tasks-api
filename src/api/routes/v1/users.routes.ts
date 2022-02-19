@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { celebrate } from 'celebrate';
 
 import { ListUsersController } from '@controllers/users/ListUsersController';
 import { FindUserByIdController } from '@controllers/users/FindUserByIdController';
@@ -15,11 +16,15 @@ import {
   validatePermission,
 } from '@middlewares/ensureAuthentication';
 
+import schemas from '@validators/user.schema';
+
 const routes = Router();
 
 /** ['user', 'admin']  */
 const onlyAdmin = validatePermission('admin');
 const secure = ensureAuthentication();
+
+const { deleteSchema, createSchema } = schemas.body;
 
 /** Controllers */
 const listController = new ListUsersController();
@@ -43,8 +48,17 @@ routes.patch('/users/avatar/remove', secure, clearAvatarController.handle);
 routes.patch('/users/avatar/:id', secure, setAvatarController.handle);
 
 /** signUp - register  */
-routes.post('/users', signUpController.handle);
+routes.post(
+  '/users',
+  celebrate({ body: createSchema }),
+  signUpController.handle
+);
 
-routes.delete('/users', secure, deleteController.handle);
+routes.delete(
+  '/users',
+  secure,
+  celebrate({ body: deleteSchema }),
+  deleteController.handle
+);
 
 export { routes as usersRoutes };
