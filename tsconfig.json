@@ -30,6 +30,7 @@
       "@services/*": ["api/core/services/*"],
       "@validators/*": ["api/core/validators/*"],
       "@routes/*": ["api/routes/*"],
+      "@providers/*": ["api/core/providers/*"],
 
       "@api/*": ["api/*"],
       "@shared/*": ["shared/*"]

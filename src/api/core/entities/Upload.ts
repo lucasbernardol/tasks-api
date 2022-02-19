@@ -9,9 +9,6 @@ import {
 } from 'typeorm';
 
 import { v4 as uuid } from 'uuid';
-import { Expose } from 'class-transformer';
-
-import { filesUploadsURL } from '@constants/url';
 import { User } from './User';
 
 /**
@@ -23,21 +20,19 @@ class Upload {
   id: string;
 
   @Column()
-  filename: string;
+  public_id: string;
 
-  @Expose({ toPlainOnly: true, name: 'url' })
-  public url(): string {
-    return filesUploadsURL + this.filename;
-  }
+  @Column()
+  filename: string;
 
   @Column()
   originalname: string;
 
   @Column()
-  bytes: number;
+  mimetype: string;
 
   @Column()
-  mimetype: string;
+  bytes: number;
 
   @Column()
   owner_id: string;
@@ -46,12 +41,27 @@ class Upload {
   @JoinColumn({ name: 'owner_id' })
   owner: User;
 
+  @Column()
+  width: number;
+
+  @Column()
+  height: number;
+
+  @Column()
+  resource_type: string;
+
+  @Column()
+  secure_url: string;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 
+  /**
+   * @public constructor
+   */
   public constructor() {
     if (!this.id) {
       this.id = uuid();

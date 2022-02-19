@@ -7,7 +7,7 @@ export class CreateUploadController {
     try {
       const { id } = request.user;
 
-      const { filename, originalname, size, mimetype } = request.file;
+      const { filename, originalname, mimetype, path } = request.file;
 
       const services = new CreateUploadService();
 
@@ -15,8 +15,8 @@ export class CreateUploadController {
         owner_id: id,
         filename,
         originalname,
-        bytes: size,
         mimetype,
+        fullPath: path,
       });
 
       return response.status(201).json(upload);

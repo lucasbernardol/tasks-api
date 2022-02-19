@@ -1,38 +1,47 @@
 import { getCustomRepository } from 'typeorm';
 import { BadRequest } from 'http-errors';
-import path from 'path';
 
+import { cloudinaryUploadDestroyHandle } from '@providers/cloudinary';
 import { UploadRepositories } from '@repositories/UploadRepositories';
-
-import { filesUploadsDirectory } from '@constants/path';
-import { deleteFileSync } from '@shared/utils/deleteFileSync';
 
 /**
  * @class DeleteUploadService
  */
 export class DeleteUploadService {
-  private message: string = 'Invalid upload, no changes applied!';
+  private message: string = 'Invalid upload!';
 
   public constructor(
     public repositories = getCustomRepository(UploadRepositories)
   ) {}
 
+  public get getErrorMessage(): string {
+    return this.message;
+  }
+
   async execute(id: string) {
-    const upload = await this.repositories.findOne({ id });
+    const upload = await this.repositories.findOne({
+      where: { id },
+      select: ['id', 'public_id'], // query
+    });
 
-    if (!upload) throw new BadRequest(this.message);
+    /** @TODO validation  */
+    const hasConflicUploadInDatabase = !upload;
 
-    /** deletion  */
+    if (hasConflicUploadInDatabase) {
+      throw new BadRequest(this.getErrorMessage);
+    }
+
+    /** Cloudinary  */
+    const cloudinaryDestroyResult = await cloudinaryUploadDestroyHandle(
+      upload.public_id
+    );
+
     const deletion = await this.repositories.delete(id);
 
     const deleted = Boolean(deletion.affected);
 
-    /** @TODO local `disk` */
-    const uploadFilePath = path.resolve(filesUploadsDirectory, upload.filename);
-
-    if (deleted) deleteFileSync(uploadFilePath);
-
     return {
+      cloudinary: cloudinaryDestroyResult,
       deleted,
     };
   }

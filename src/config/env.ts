@@ -7,6 +7,15 @@ export interface JsonWebTokenEnv {
 }
 
 /**
+ * @interface CloudinaryEnv
+ */
+export interface CloudinaryEnv {
+  cloudinary_name: string;
+  cloudinary_key: string;
+  cloudinary_secret: string;
+}
+
+/**
  * @interface Env
  */
 export interface Env {
@@ -16,6 +25,8 @@ export interface Env {
   port: number;
   host: string;
   jwt: JsonWebTokenEnv;
+
+  cloudinary: CloudinaryEnv;
 }
 
 export default {
@@ -32,5 +43,11 @@ export default {
      * 24 hours in seconds (s)
      */
     expires: 24 * 3600,
+  },
+
+  cloudinary: {
+    cloudinary_name: process.env.CLOUDINARY_NAME,
+    cloudinary_key: process.env.CLOUDINARY_KEY,
+    cloudinary_secret: process.env.CLOUDINARY_SECRET,
   },
 } as Env;
