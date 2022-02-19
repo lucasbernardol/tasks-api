@@ -1,5 +1,5 @@
 /**
- * @interface IJwTEnv
+ * @interface JsonWebTokenEnv
  */
 export interface JsonWebTokenEnv {
   secret: string;
@@ -21,33 +21,34 @@ export interface CloudinaryEnv {
 export interface Env {
   NODE_ENV: string;
   IS_NODE_ENV_DEVELOPMENT: boolean;
-
   port: number;
   host: string;
-  jwt: JsonWebTokenEnv;
 
+  jwt: JsonWebTokenEnv;
   cloudinary: CloudinaryEnv;
 }
 
-export default {
+const variables: Env = {
   NODE_ENV: process.env.NODE_ENV,
   IS_NODE_ENV_DEVELOPMENT: process.env.NODE_ENV === 'development',
 
+  host: process.env.HOST || 'http://localhost:3333',
+
   port: Number(process.env.PORT) || 3333,
-  host: process.env.HOST,
 
   jwt: {
     secret: process.env.SECRET_JWT,
 
-    /**
-     * 24 hours in seconds (s)
-     */
+    /** 24 hours in seconds (s) */
     expires: 24 * 3600,
   },
 
+  /** Cloudinary variables  */
   cloudinary: {
     cloudinary_name: process.env.CLOUDINARY_NAME,
     cloudinary_key: process.env.CLOUDINARY_KEY,
     cloudinary_secret: process.env.CLOUDINARY_SECRET,
   },
-} as Env;
+};
+
+export default variables;

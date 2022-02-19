@@ -1,12 +1,7 @@
 /**
  * @constant mimetypes
  */
-export const mimetypes: string[] = [
-  'image/jpeg',
-  'image/pjpeg',
-  'image/png',
-  //'image/gif',
-];
+export const mimetypes: string[] = ['image/jpeg', 'image/pjpeg', 'image/png'];
 
 /**
  * @constant multerFilenameSize
