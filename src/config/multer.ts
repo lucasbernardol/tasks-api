@@ -43,7 +43,7 @@ const options: Options = {
     /** @TODO Return a error message */
     if (!fileMimetypeIsSupported) {
       const extras = {
-        supported_mimetypes: mimetypes,
+        supported: mimetypes,
       };
 
       return callback(
