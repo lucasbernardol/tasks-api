@@ -99,6 +99,17 @@ específicos que desempenham esse papel. Veja a tabela abaixo:
 
 > Observação: veja o arquivo Insomnia.json na raiz do projeto, ele contém uma breve documentação com todos os endpoints.
 
+## :file_folder: Estrutura do banco de dados
+
+- Diagrama do banco de dados **PostgresSQL** e a estrura do projeto:
+
+<img 
+  src="diagrams/database.png" 
+  alt="Database" 
+  with="700" 
+  height="600" 
+/>
+
 ## :boy: Autor
 
 <table class="author">
