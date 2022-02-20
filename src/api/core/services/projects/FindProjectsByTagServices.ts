@@ -51,7 +51,7 @@ export class FindProjectsByTagServices {
       take: paging.limit,
       skip: offset,
 
-      relations: ['tag'],
+      relations: ['tag', 'tasks'],
     });
 
     const pagination = records ? pagingUtilNormalize(paging) : null;

@@ -43,7 +43,7 @@ routes.post(
   createController.handle
 );
 
-routes.put('/projects/completed/:id', secure, completedController.handle);
+routes.patch('/projects/completed/:id', secure, completedController.handle);
 
 routes.put(
   '/projects/:id',
