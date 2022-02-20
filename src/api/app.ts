@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import helmet from 'helmet';
 
 import { createCelebrateHandle } from '@middlewares/CelebrateHandler';
 import { createApplicationHandler } from '@middlewares/Handler';
@@ -15,7 +16,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(helmet());
 app.use(cors());
+app.enable('trust proxy');
 
 /** morgan: logger */
 if (config.IS_NODE_ENV_DEVELOPMENT) app.use(morgan('dev'));
