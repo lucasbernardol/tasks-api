@@ -1,5 +1,8 @@
 require('dotenv/config');
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+const folder = isDevelopment ? 'src' : 'dist';
+
 module.exports = {
   type: process.env.DATABASE_TYPE || 'postgres',
   host: process.env.DATABASE_HOST,
@@ -11,12 +14,12 @@ module.exports = {
 
   logging: false,
 
-  entities: ['src/api/core/entities/*{.js,.ts}'],
+  entities: [`${folder}/api/core/entities/*{.js,.ts}`],
 
   migrationsTableName: 'migrations',
-  migrations: ['src/api/core/database/migrations/*{.js,.ts}'],
+  migrations: [`${folder}/api/core/database/migrations/*{.js,.ts}`],
 
   cli: {
-    migrationsDir: 'src/api/core/database/migrations',
+    migrationsDir: `${folder}/api/core/database/migrations`,
   },
 };
