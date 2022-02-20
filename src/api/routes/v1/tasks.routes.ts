@@ -13,6 +13,7 @@ import { UpdateTaskController } from '@controllers/tasks/UpdateTaskController';
 import schemas from '@validators/task.schema';
 
 import { ensureAuthentication } from '@middlewares/ensureAuthentication';
+import { CompletedTaskController } from '@controllers/tasks/CompletedTaskController';
 
 const routes = Router();
 
@@ -25,6 +26,8 @@ const listController = new ListTasksController();
 const findByIdController = new FindTaskByIdController();
 const listByProjectsController = new ListTasksByProjectController();
 
+const completedController = new CompletedTaskController();
+
 const createController = new CreateTaskController();
 const updateController = new UpdateTaskController();
 
@@ -36,6 +39,8 @@ routes.get('/tasks/:id', secure, findByIdController.handle);
 
 // project_id
 routes.get('/tasks/project/:id', secure, listByProjectsController.handle);
+
+routes.patch('/tasks/completed/:id', secure, completedController.handle);
 
 routes.put(
   '/tasks/:id',
