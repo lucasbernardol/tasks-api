@@ -5,15 +5,15 @@ import { ListTasksController } from '@controllers/tasks/ListTasksController';
 import { FindTaskByIdController } from '@controllers/tasks/FindTaskByIdController';
 import { ListTasksByProjectController } from '@controllers/tasks/ListTasksByProjectController';
 
+import { CompletedTaskController } from '@controllers/tasks/CompletedTaskController';
 import { CreateTaskController } from '@controllers/tasks/CreateTaskController';
-import { DeleteTaskController } from '@controllers/tasks/DeleteTaskController';
 
+import { DeleteTaskController } from '@controllers/tasks/DeleteTaskController';
 import { UpdateTaskController } from '@controllers/tasks/UpdateTaskController';
 
 import schemas from '@validators/task.schema';
 
 import { ensureAuthentication } from '@middlewares/ensureAuthentication';
-import { CompletedTaskController } from '@controllers/tasks/CompletedTaskController';
 
 const routes = Router();
 
@@ -37,7 +37,10 @@ const deleteController = new DeleteTaskController();
 routes.get('/tasks', secure, listController.handle);
 routes.get('/tasks/:id', secure, findByIdController.handle);
 
-// project_id
+/**
+ * - Get tasks by project id
+ * @example: api/tasks/project/{id}
+ */
 routes.get('/tasks/project/:id', secure, listByProjectsController.handle);
 
 routes.patch('/tasks/completed/:id', secure, completedController.handle);
