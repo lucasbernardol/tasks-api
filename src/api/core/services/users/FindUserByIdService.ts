@@ -1,4 +1,3 @@
-import { instanceToPlain } from 'class-transformer';
 import { getCustomRepository } from 'typeorm';
 
 import { UserRepositories } from '@repositories/UserRepositories';
@@ -11,13 +10,21 @@ export class FindUserByIdService {
     public repositories = getCustomRepository(UserRepositories)
   ) {}
 
-  /** @method execute  */
+  /** @method execute - main method */
   async execute(id: string) {
-    const account = await this.repositories.findOne({
+    const findToPublicView = await this.repositories.findOne({
       where: { id },
+      select: [
+        'id',
+        'name',
+        'full_name',
+        'avatar_id',
+        'created_at',
+        'updated_at',
+      ],
       relations: ['avatar'],
     });
 
-    return account ? instanceToPlain(account) : null;
+    return findToPublicView ?? null;
   }
 }
