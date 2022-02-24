@@ -4,33 +4,23 @@ import { paginate } from 'paging-util';
 import { ProjectRepositories } from '@repositories/ProjectRepositories';
 
 import { pagingUtilNormalize, pagingUtilFixed } from '@shared/utils/paging';
-
-export interface IPagingOptions {
-  page: number;
-  limit: number;
-
-  setRange?: boolean;
-  max?: number;
-  min?: number;
-}
+import { IPagingOptions } from '@shared/types/IPagingOptions';
 
 export interface IProjectFindByTagOptions {
   owner_id: string;
   tag_id: string;
 }
 
+/**
+ * @class FindProjectsByTagServices
+ */
 export class FindProjectsByTagServices {
   public constructor(
     public repositories = getCustomRepository(ProjectRepositories)
   ) {}
 
-  async execute(
-    options: IProjectFindByTagOptions,
-    pagingOptions: IPagingOptions
-  ) {
-    const { owner_id, tag_id } = options;
-
-    const { page, limit, ...rest } = pagingOptions;
+  async execute(find: IProjectFindByTagOptions, options: IPagingOptions) {
+    const { owner_id, tag_id } = find;
 
     /** @TODO typeORM filter */
     const filter = {
@@ -38,20 +28,16 @@ export class FindProjectsByTagServices {
       tag_id,
     };
 
-    const records = await this.repositories.count({
-      where: filter,
-    });
+    const records = await this.repositories.count({ where: filter });
 
-    const pagingNormalizedOptions = { records, page, limit, ...rest };
-
-    const { offset, constants, ...paging } = paginate(pagingNormalizedOptions);
+    const { offset, constants, ...paging } = paginate({ records, ...options });
 
     const projects = await this.repositories.find({
       where: filter,
+
       take: paging.limit,
       skip: offset,
-
-      relations: ['tag', 'tasks'],
+      relations: ['banner'],
     });
 
     const pagination = records ? pagingUtilNormalize(paging) : null;

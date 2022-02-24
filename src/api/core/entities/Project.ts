@@ -12,7 +12,10 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import { User } from './User';
+
 import { Tag } from './Tag';
+
+import { Upload } from './Upload';
 import { Task } from './Task';
 
 /**
@@ -42,16 +45,21 @@ class Project {
   @JoinColumn({ name: 'owner_id' })
   owner: User;
 
-  @Column()
+  @Column({ nullable: true })
   tag_id: string;
 
   @ManyToOne(() => Tag)
   @JoinColumn({ name: 'tag_id' })
   tag: Tag;
 
-  /**
-   * Tasks: inverse relation
-   */
+  @Column({ nullable: true })
+  banner_id: string;
+
+  @ManyToOne(() => Upload)
+  @JoinColumn({ name: 'banner_id' })
+  banner: Upload;
+
+  /** @description Tasks: inverse relation  */
   @OneToMany(() => Task, (task) => task.project)
   tasks: Task[];
 

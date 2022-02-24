@@ -2,14 +2,17 @@ import { Router } from 'express';
 import { celebrate } from 'celebrate';
 
 import { ListProjectsController } from '@controllers/projects/ListProjectsController';
-import { FindProjectsByIdController } from '@controllers/projects/FindProjectsByIdController';
+import { FindProjectByIdController } from '@controllers/projects/FindProjectByIdController';
 import { FindProjectsByTagController } from '@controllers/projects/FindProjectsByTagController';
 
-import { CreateProjectsController } from '@controllers/projects/CreateProjectsController';
+import { SetProjectBannerController } from '@controllers/projects/SetProjectBannerController';
+import { ClearProjectBannerController } from '@controllers/projects/ClearProjectBannerController';
+
+import { CreateProjectController } from '@controllers/projects/CreateProjectController';
 import { CompletedProjectController } from '@controllers/projects/CompletedProjectController';
 
-import { UpdateProjectsController } from '@controllers/projects/UpdateProjectsController';
-import { DeleteProjectsController } from '@controllers/projects/DeleteProjectsController';
+import { UpdateProjectController } from '@controllers/projects/UpdateProjectController';
+import { DeleteProjectController } from '@controllers/projects/DeleteProjectController';
 
 import schemas from '@validators/project.schema';
 
@@ -22,19 +25,43 @@ const { createSchema, updateSchema } = schemas.body;
 
 /** Controllers  */
 const listController = new ListProjectsController();
-const findByIdController = new FindProjectsByIdController();
+const findByIdController = new FindProjectByIdController();
 const findByTagController = new FindProjectsByTagController();
 
-const createController = new CreateProjectsController();
+const createController = new CreateProjectController();
 const completedController = new CompletedProjectController();
 
-const updateController = new UpdateProjectsController();
-const deleteController = new DeleteProjectsController();
+const setBannerController = new SetProjectBannerController();
+const clearBannerController = new ClearProjectBannerController();
+
+const updateController = new UpdateProjectController();
+const deleteController = new DeleteProjectController();
 
 /** Routes  */
 routes.get('/projects', secure, listController.handle);
 routes.get('/projects/:id', secure, findByIdController.handle);
 routes.get('/projects/tag/:id', secure, findByTagController.handle);
+
+/**
+ * - Toogle completed status
+ */
+routes.patch('/projects/completed/:id', secure, completedController.handle);
+
+/**
+ * - Clear banner
+ * @example: api/projects/banner/{id}/
+ */
+routes.patch('/projects/banner/:id', secure, clearBannerController.handle);
+
+/**
+ * - Set banner
+ * @example: api/projects/{projectId}/banner/{bannerId}/
+ */
+routes.patch(
+  '/projects/:projectId/banner/:bannerId',
+  secure,
+  setBannerController.handle
+);
 
 routes.post(
   '/projects',
@@ -42,8 +69,6 @@ routes.post(
   celebrate({ body: createSchema }),
   createController.handle
 );
-
-routes.patch('/projects/completed/:id', secure, completedController.handle);
 
 routes.put(
   '/projects/:id',

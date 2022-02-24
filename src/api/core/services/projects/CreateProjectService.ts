@@ -17,7 +17,7 @@ export interface IProject {
 /**
  * @class CreateProjectsServices
  */
-export class CreateProjectsServices {
+export class CreateProjectService {
   public constructor(
     public repositories = getCustomRepository(ProjectRepositories),
     public tagRepositories = getCustomRepository(TagRepositories)

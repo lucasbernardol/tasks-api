@@ -3,6 +3,9 @@ import { BadRequest } from 'http-errors';
 
 import { ProjectRepositories } from '@repositories/ProjectRepositories';
 
+/**
+ * @interface IProjectDelete
+ */
 export interface IProjectDelete {
   owner_id: string;
   project_id: string;
@@ -11,33 +14,28 @@ export interface IProjectDelete {
 /**
  * @class DeleteProjectsServices
  */
-export class DeleteProjectsServices {
+export class DeleteProjectService {
   public constructor(
     public repostiories = getCustomRepository(ProjectRepositories)
   ) {}
 
   /** @method execute - main method */
-  async execute(options: IProjectDelete) {
-    const { owner_id, project_id } = options;
-
+  async execute({ owner_id, project_id }: IProjectDelete) {
     const project = await this.repostiories.findOne({
       where: {
         id: project_id,
         owner_id,
       },
-
       select: ['id'],
     });
 
-    if (!project) {
-      /** @TODO Return a error message */
-      throw new BadRequest('Project not found, no changes applied!');
-    }
+    /** @TODO Return a error message */
+    if (!project) throw new BadRequest('Project not found!');
 
-    const deleteResult = await this.repostiories.delete(project_id);
+    const deletedResult = await this.repostiories.delete(project_id);
 
     return {
-      deleted: Boolean(deleteResult.affected),
+      deleted: Boolean(deletedResult.affected),
     };
   }
 }

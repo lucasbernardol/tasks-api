@@ -16,12 +16,14 @@ export class CompletedProjectServices {
 
     if (!project) throw new BadRequest('Project not found!');
 
-    /** true => false | false => true */
+    /**
+     * - Toggle
+     *   true => false
+     *   false => true
+     **/
     const completed = !project.completed;
 
-    const updateResult = await this.repostirories.update(id, {
-      completed,
-    });
+    const updateResult = await this.repostirories.update(id, { completed });
 
     const updated = Boolean(updateResult.affected);
 

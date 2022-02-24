@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { FindProjectsByIdServices } from '@services/projects/FindProjectsByIdServices';
+import { FindProjectByIdService } from '@services/projects/FindProjectByIdService';
 
 /**
  * @class FindProjectByIdController
  */
-export class FindProjectsByIdController {
+export class FindProjectByIdController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
       const { id } = request.params;
 
-      const services = new FindProjectsByIdServices();
+      const services = new FindProjectByIdService();
 
       const project = await services.execute(id);
 

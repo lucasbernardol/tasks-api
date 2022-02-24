@@ -9,16 +9,13 @@ export class FindProjectsByTagController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
       const { id } = request.user;
-
       const { id: tag_id } = request.params;
-
-      const { page, limit } = request.paging;
 
       const services = new FindProjectsByTagServices();
 
       const projects = await services.execute(
         { owner_id: id, tag_id },
-        { page, limit }
+        { ...request.paging }
       );
 
       return response.json(projects);

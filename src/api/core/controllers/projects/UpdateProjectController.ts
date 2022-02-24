@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { UpdateProjectsServices } from '@services/projects/UpdateProjectsServices';
+import { UpdateProjectService } from '@services/projects/UpdateProjectService';
 
 /**
  * @class UpdateProjectsController
  */
-export class UpdateProjectsController {
+export class UpdateProjectController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
       const { id: project_id } = request.params;
 
       const { title, subtitle, description } = request.body;
 
-      const services = new UpdateProjectsServices();
+      const services = new UpdateProjectService();
 
       const updated = await services.execute(project_id, {
         title,

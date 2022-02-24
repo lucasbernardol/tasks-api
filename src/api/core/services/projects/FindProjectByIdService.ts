@@ -3,15 +3,22 @@ import { getCustomRepository } from 'typeorm';
 import { ProjectRepositories } from '@repositories/ProjectRepositories';
 
 /**
- * @class FindProjectsByIdServices
+ * @class FindProjectByIdService
  */
-export class FindProjectsByIdServices {
+export class FindProjectByIdService {
   public constructor(
     public repositories = getCustomRepository(ProjectRepositories)
   ) {}
 
+  /**
+   * @method execute - main method
+   * @param id - Project id: `PK`
+   */
   async execute(id: string) {
-    const project = await this.repositories.findOne({ id });
+    const project = await this.repositories.findOne({
+      where: { id },
+      relations: ['banner', 'tasks'],
+    });
 
     return project ?? null;
   }

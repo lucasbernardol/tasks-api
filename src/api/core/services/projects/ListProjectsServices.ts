@@ -43,7 +43,7 @@ export class ListProjectsServices {
       take: paging.limit,
       skip: offset,
 
-      relations: ['tag', 'tasks'],
+      relations: ['banner'],
     });
 
     /** @TODO Add pagination metadata */
