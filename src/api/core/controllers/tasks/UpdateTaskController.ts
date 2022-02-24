@@ -10,13 +10,14 @@ export class UpdateTaskController {
     try {
       const { id } = request.params;
 
-      const { name, details } = request.body;
+      const { name, finish_date, details } = request.body;
 
       const services = new UpdateTaskService();
 
       const updated = await services.execute(id, {
         name,
         details,
+        finish_date,
       });
 
       return response.json(updated);

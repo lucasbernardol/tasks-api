@@ -115,7 +115,7 @@ export class Handler {
 
       if (!actualErrorIsHttp) {
         const error = { message: 'Internal error' };
-        console.log(error);
+        console.log(err);
 
         return response.status(500).json({ error });
       }

@@ -8,6 +8,7 @@ import { TaskRepositories } from '@repositories/TaskRepositories';
 export interface ITaskUpdate {
   name: string;
   details: string;
+  finish_date: number;
 }
 
 /**
@@ -21,11 +22,12 @@ export class UpdateTaskService {
   /** @method execute */
   // prettier-ignore
   async execute(id: string, options: ITaskUpdate): Promise<{ updated: boolean }> {
-    const { name, details } = options;
+    const { name, details, finish_date } = options;
 
     const updateResult = await this.repositories.update(id, {
       name,
       details,
+      finish_date
     });
 
     return {

@@ -8,7 +8,7 @@ import { CreateTaskService } from '@services/tasks/CreateTaskService';
 export class CreateTaskController {
   async handle(request: Request, response: Response, next: NextFunction) {
     try {
-      const { name, details, project_id } = request.body;
+      const { name, finish_date, details, project_id } = request.body;
 
       const { id: owner_id } = request.user;
 
@@ -17,6 +17,7 @@ export class CreateTaskController {
       const task = await services.execute({
         name,
         details,
+        finish_date,
         project_id,
         owner_id,
       });

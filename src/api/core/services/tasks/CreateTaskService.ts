@@ -9,6 +9,7 @@ export interface ITask {
   name: string;
   details: string;
   completed?: boolean;
+  finish_date: number;
   owner_id: string;
   project_id: string;
   created_at?: Date;
@@ -25,7 +26,7 @@ export class CreateTaskService {
   ) {}
 
   async execute(task: ITask) {
-    const { name, details, owner_id, project_id } = task;
+    const { name, details, finish_date, owner_id, project_id } = task;
 
     /** Filter   */
     const filter = { id: project_id, owner_id };
@@ -41,6 +42,7 @@ export class CreateTaskService {
     const taskInstance = this.repositories.create({
       name,
       details,
+      finish_date,
       owner_id,
       project_id,
     });

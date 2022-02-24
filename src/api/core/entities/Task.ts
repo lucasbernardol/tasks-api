@@ -31,6 +31,9 @@ class Task {
   completed: boolean;
 
   @Column()
+  finish_date: number;
+
+  @Column()
   owner_id: string;
 
   @ManyToOne(() => User)
