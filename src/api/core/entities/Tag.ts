@@ -1,21 +1,12 @@
-import {
-  Entity,
-  PrimaryColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-import { v4 as uuid } from 'uuid';
+import { BaseEnity } from './BaseEntity';
 
 /**
  * @class Tag
  */
 @Entity({ name: 'tags' })
-class Tag {
-  @PrimaryColumn()
-  id: string;
-
+export class Tag extends BaseEnity {
   @Column()
   name: string;
 
@@ -30,15 +21,4 @@ class Tag {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  /**
-   * @public constructor
-   */
-  public constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
-
-export { Tag };

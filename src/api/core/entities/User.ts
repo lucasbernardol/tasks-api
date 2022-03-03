@@ -1,6 +1,5 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   OneToMany,
   OneToOne,
@@ -10,18 +9,15 @@ import {
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
-import { v4 as uuid } from 'uuid';
 
+import { BaseEnity } from './BaseEntity';
 import { Upload } from './Upload';
 
 /**
  * @class User
  */
 @Entity({ name: 'users' })
-class User {
-  @PrimaryColumn()
-  id: string;
-
+class User extends BaseEnity {
   @Column()
   name: string;
 
@@ -60,15 +56,6 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  /**
-   * @public constructor
-   */
-  public constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
 
 export { User };

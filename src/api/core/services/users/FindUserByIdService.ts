@@ -12,19 +12,8 @@ export class FindUserByIdService {
 
   /** @method execute - main method */
   async execute(id: string) {
-    const findToPublicView = await this.repositories.findOne({
-      where: { id },
-      select: [
-        'id',
-        'name',
-        'full_name',
-        'avatar_id',
-        'created_at',
-        'updated_at',
-      ],
-      relations: ['avatar'],
-    });
+    const account = await this.repositories.findAndIgnoreFields(id);
 
-    return findToPublicView ?? null;
+    return account ?? null;
   }
 }

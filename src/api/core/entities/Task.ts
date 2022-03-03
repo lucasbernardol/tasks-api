@@ -1,6 +1,5 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   JoinColumn,
   ManyToOne,
@@ -8,19 +7,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { v4 as uuid } from 'uuid';
+import { BaseEnity } from './BaseEntity';
+import { User } from './User';
 
 import { Project } from './Project';
-import { User } from './User';
 
 /**
  * @class Task
  */
 @Entity({ name: 'tasks' })
-class Task {
-  @PrimaryColumn()
-  id: string;
-
+export class Task extends BaseEnity {
   @Column()
   name: string;
 
@@ -52,15 +48,4 @@ class Task {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  /**
-   * @pbulic constructor
-   */
-  public constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
-
-export { Task };

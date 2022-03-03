@@ -1,6 +1,5 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   JoinColumn,
   ManyToOne,
@@ -8,17 +7,14 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { v4 as uuid } from 'uuid';
+import { BaseEnity } from './BaseEntity';
 import { User } from './User';
 
 /**
  * @class Upload
  */
 @Entity({ name: 'uploads' })
-class Upload {
-  @PrimaryColumn()
-  id: string;
-
+export class Upload extends BaseEnity {
   @Column()
   public_id: string;
 
@@ -58,15 +54,4 @@ class Upload {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  /**
-   * @public constructor
-   */
-  public constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
-
-export { Upload };

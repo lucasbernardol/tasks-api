@@ -1,18 +1,16 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
 
-import { v4 as uuid } from 'uuid';
+import { BaseEnity } from './BaseEntity';
 
 import { User } from './User';
-
 import { Tag } from './Tag';
 
 import { Upload } from './Upload';
@@ -22,10 +20,7 @@ import { Task } from './Task';
  * @class Project
  */
 @Entity({ name: 'projects' })
-class Project {
-  @PrimaryColumn()
-  id: string;
-
+export class Project extends BaseEnity {
   @Column()
   title: string;
 
@@ -68,12 +63,4 @@ class Project {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  public constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
-
-export { Project };
